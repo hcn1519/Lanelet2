@@ -8,7 +8,7 @@
   <license>BSD</license>
   <maintainer email="fabian.immel@kit.edu">Fabian Immel</maintainer>
   <author email="maximilian.naumann@kit.edu">Maximilian Naumann</author>
-  <url type="repository">https://github.com/fzi-forschungszentrum-informatik/lanelet2.git</url>
+  <url type="repository">https://github.com/hcn1519/lanelet2.git</url>
 
   <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
   <buildtool_depend condition="$ROS_VERSION == 2">ament_cmake_core</buildtool_depend>

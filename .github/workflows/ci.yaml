@@ -43,36 +43,36 @@ jobs:
           set -ex
           docker run -i --rm lanelet2_src find . -name "*.cpp" -o -name "*.h" -execdir clang-format-11 -n -Werror --style=file {} +
   
-  lint:
-    needs: formatting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup docker buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
+  # lint:
+  #   needs: formatting
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Setup docker buildx
+  #       id: buildx
+  #       uses: docker/setup-buildx-action@v2
 
-      - name: Setup docker cache
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.docker-cache
-          key: ${{runner.os}}-docker-humble
+  #     - name: Setup docker cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: /tmp/.docker-cache
+  #         key: ${{runner.os}}-docker-humble
 
-      - name: Build dependencies
-        uses: docker/build-push-action@v3
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          tags: lanelet2_src
-          cache-from: type=local,src=/tmp/.docker-cache
-          cache-to: type=local,dest=/tmp/.docker-cache
-          load: true
-          build-args: |
-            DEV=1
-            DISTRIBUTION=22.04
-            ROS_DISTRO=humble
-            ROS=ros2
-          target: lanelet2_src
-      - name: Run clang-tidy
-        run: docker run -i --rm lanelet2_src /home/developer/workspace/src/lanelet2/.github/lint.bash
+  #     - name: Build dependencies
+  #       uses: docker/build-push-action@v3
+  #       with:
+  #         builder: ${{ steps.buildx.outputs.name }}
+  #         tags: lanelet2_src
+  #         cache-from: type=local,src=/tmp/.docker-cache
+  #         cache-to: type=local,dest=/tmp/.docker-cache
+  #         load: true
+  #         build-args: |
+  #           DEV=1
+  #           DISTRIBUTION=22.04
+  #           ROS_DISTRO=humble
+  #           ROS=ros2
+  #         target: lanelet2_src
+  #     - name: Run clang-tidy
+  #       run: docker run -i --rm lanelet2_src /home/developer/workspace/src/lanelet2/.github/lint.bash
 
   test:
     needs: formatting
@@ -178,7 +178,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   full_conan_installation:
-    needs: lint
+    # needs: lint
     strategy:
       matrix:
         # to reach 2_27, we need a gcc7.

@@ -65,7 +65,7 @@ class Lanelet2Conan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     license = "BSD"
-    url = "https://github.com/fzi-forschungszentrum-informatik/lanelet2"
+    url = "https://github.com/hcn1519/lanelet2"
     description = "Map handling framework for automated driving"
     options = {"shared": [True, False], "fPIC": [True]}
     default_options = {"shared": True, "fPIC": True, "boost:shared": True, "boost:python_version": get_py_version(), "boost:without_python": False, "python_dev_config:python": get_py_exec()}
