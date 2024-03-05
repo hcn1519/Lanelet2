@@ -5,7 +5,7 @@ on:
     branches:
       - master
     tags:
-      - '*'
+      - '*.mgrs'
   workflow_dispatch:
 
 permissions:
@@ -102,9 +102,11 @@ jobs:
         run: python -c "import lanelet2; assert lanelet2.core.Point2d(0, 0, 0) is not None"
 
   publish:
-    if: contains(github.ref, 'refs/tags/')
+    # if: contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     needs: [build, test]
+    permissions:
+      id-token: write
     steps:
       - name: Restore wheel
         uses: actions/download-artifact@v3
@@ -116,12 +118,14 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: dist/*
+          token: ${{ secrets.GHP_PAT }}
 
-      - name: Publish package to PyPI
-        if: github.repository == 'fzi-forschungszentrum-informatik/Lanelet2'
+      - name: Publish package to Test PyPI
+        if: github.repository == 'hcn1519/Lanelet2'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
 
   deploy-pages:
     runs-on: ubuntu-latest
