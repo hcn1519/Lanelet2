@@ -117,11 +117,12 @@ jobs:
         with:
           files: dist/*
 
-      - name: Publish package to PyPI
-        if: github.repository == 'fzi-forschungszentrum-informatik/Lanelet2'
+      - name: Publish package to Test PyPI
+        if: github.repository == 'hcn1519/Lanelet2'
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
 
   deploy-pages:
     runs-on: ubuntu-latest
